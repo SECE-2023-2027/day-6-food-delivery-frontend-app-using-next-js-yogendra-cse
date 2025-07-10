@@ -2,11 +2,12 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 const menuItems = [
   {
     id: 1,
     name: "Chicago Pizza",
-    image: "/sunsetimage.jpeg",
+    image: "/food1.jpeg",
     cuisine: "Pizza, Beverages, Snacks, Pasta",
     price: "₹250",
     rating: "3.9 Rating",
@@ -14,7 +15,7 @@ const menuItems = [
   {
     id: 2,
     name: "Bakingo",
-    image: "/sunsetimage.jpeg",
+    image: "/food1.jpeg",
     cuisine: "Bakery, Desserts, Beverages, Snacks",
     price: "₹180",
     rating: "4.3 Rating",
@@ -22,7 +23,7 @@ const menuItems = [
   {
     id: 3,
     name: "Khadak Singh Da Dhaba",
-    image: "/sunsetimage.jpeg",
+    image: "/food1.jpeg",
     cuisine: "North Indian, Tandoor, Snacks",
     price: "₹200",
     rating: "3.8 Rating",
@@ -30,7 +31,7 @@ const menuItems = [
   {
     id: 4,
     name: "Dhaba 99 Cafe & Kitchen",
-    image: "/sunsetimage.jpeg",
+    image: "/food1.jpeg",
     cuisine: "Indian, Chinese, Beverages",
     price: "₹250",
     rating: "3.8 Rating",
@@ -38,7 +39,7 @@ const menuItems = [
   {
     id: 5,
     name: "Hotel Krishna Sagar",
-    image: "/sunsetimage.jpeg",
+    image: "/food1.jpeg",
     cuisine: "North Indian, South Indian",
     price: "₹250",
     rating: "4.6 Rating",
@@ -46,7 +47,7 @@ const menuItems = [
   {
     id: 6,
     name: "Wendy's Burgers",
-    image: "/sunsetimage.jpeg",
+    image: "/food1.jpeg",
     cuisine: "Burgers, American, Snacks",
     price: "₹240",
     rating: "4.3 Rating",
@@ -54,7 +55,7 @@ const menuItems = [
   {
     id: 7,
     name: "MOJO Pizza - 2X Toppings",
-    image: "/sunsetimage.jpeg",
+    image: "/food1.jpeg",
     cuisine: "Pizza, Pasta, Fast Food, Desserts",
     price: "₹250",
     rating: "4.4 Rating",
@@ -62,7 +63,7 @@ const menuItems = [
   {
     id: 8,
     name: "BOX8 - Desi Meals",
-    image: "/sunsetimage.jpeg",
+    image: "/food1.jpeg",
     cuisine: "North Indian, Wraps, Biryani",
     price: "₹210",
     rating: "4.2 Rating",
@@ -70,7 +71,7 @@ const menuItems = [
   {
     id: 9,
     name: "Bikanervala",
-    image: "/sunsetimage.jpeg",
+    image: "/food1.jpeg",
     cuisine: "Sweets, North Indian, Snacks",
     price: "₹200",
     rating: "4.5 Rating",
@@ -78,7 +79,7 @@ const menuItems = [
   {
     id: 10,
     name: "Chinese Wok",
-    image: "/sunsetimage.jpeg",
+    image: "/food1.jpeg",
     cuisine: "Chinese, Asian, Tibetan",
     price: "₹230",
     rating: "4.1 Rating",
@@ -86,7 +87,7 @@ const menuItems = [
   {
     id: 11,
     name: "White Hart Pizza",
-    image: "/sunsetimage.jpeg",
+    image: "/food1.jpeg",
     cuisine: "Italian, Pizza, Beverages",
     price: "₹260",
     rating: "4.0 Rating",
@@ -94,7 +95,7 @@ const menuItems = [
   {
     id: 12,
     name: "Samosa Singh",
-    image: "/sunsetimage.jpeg",
+    image: "/food1.jpeg",
     cuisine: "Snacks, Street Food",
     price: "₹150",
     rating: "4.2 Rating",
@@ -103,8 +104,9 @@ const menuItems = [
 
 export default function MenuPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
-
-  const itemsPerView = 5; // Matches visual density
+  const router = useRouter();
+  const [title, setTitle] = useState("");
+  const itemsPerView = 5;
   const maxIndex = Math.max(0, menuItems.length - itemsPerView);
 
   const goToPrevious = () => {
@@ -114,6 +116,7 @@ export default function MenuPage() {
   const goToNext = () => {
     setCurrentIndex((prev) => Math.min(maxIndex, prev + 1));
   };
+
   return (
     <>
       <div>
@@ -135,6 +138,11 @@ export default function MenuPage() {
                 <div
                   key={item.id}
                   className="flex-shrink-0 w-[160px] rounded-lg bg-white"
+                  onClick={(e) => {
+                    setTitle(item.name);
+                    const formattedTitle = item.name.replaceAll(" ", "-");
+                    router.push(`/Singlepage/${encodeURIComponent(formattedTitle)}`);
+                  }}
                 >
                   <div className="h-[110px] w-full overflow-hidden rounded-md bg-gray-100">
                     <img
@@ -196,6 +204,11 @@ export default function MenuPage() {
       <div className="mx-[100px] my-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2">
         {menuItems.map((item) => (
           <div
+            onClick={(e) => {
+              setTitle(item.name);
+                    const formattedTitle = item.name.replaceAll(" ", "-");
+                    router.push(`/Singlepage/${encodeURIComponent(formattedTitle)}`);
+            }}
             key={item.id}
             className="my-4 h-[330px] w-[300px] rounded overflow-hidden shadow-lg mb-7 mx-auto"
           >
